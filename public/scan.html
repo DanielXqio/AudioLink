@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AudioLink Scanner</title>
+    <link rel="stylesheet" href="scan.css" />
+  </head>
+  <body>
+    <div class="background" aria-hidden="true"></div>
+    <main class="hero">
+      <header class="hero__header">
+        <p class="eyebrow">AudioLink Demo</p>
+        <h1 class="hero__title">
+          Scan the air for <span class="hero__accent">sound links</span>
+        </h1>
+        <p class="hero__subtitle">
+          Convert any digital link into sound and decode it back using only your
+          microphone. The futuristic alternative to QR codes, right in your
+          browser.
+        </p>
+      </header>
+      <ul class="hero__features">
+        <li>Audio Detection</li>
+        <li>Sound Generation</li>
+        <li>Instant Conversion</li>
+        <li>Universal Links</li>
+      </ul>
+      <div class="hero__actions">
+        <button id="scan-toggle" class="cta" aria-pressed="false">Scan Now</button>
+        <a href="/" class="cta cta--secondary">Generate Sound</a>
+      </div>
+      <p class="hero__footnote">Try the demo · No signup required · Works on any device</p>
+      <section class="scanner" aria-live="polite">
+        <p id="status" class="scanner__status" data-tone="muted">
+          Ready to listen for ggwave messages.
+        </p>
+        <div id="result" class="scanner__result" hidden>
+          <p class="scanner__label">Last decoded message</p>
+          <p id="result-text" class="scanner__message"></p>
+          <div id="result-preview" class="scanner__preview" hidden>
+            <div class="scanner__preview-media">
+              <img id="result-preview-image" alt="Link preview image" hidden />
+            </div>
+            <div class="scanner__preview-content">
+              <p class="scanner__preview-source" id="result-preview-source"></p>
+              <h3 class="scanner__preview-title" id="result-preview-title"></h3>
+              <p class="scanner__preview-description" id="result-preview-description"></p>
+              <a
+                id="result-preview-link"
+                class="scanner__preview-url"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+              ></a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="scan.js" type="module"></script>
+  </body>
+</html>

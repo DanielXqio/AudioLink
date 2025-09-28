@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AudioLink – ggwave POC</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1>AudioLink</h1>
+        <p class="tagline">Proof of concept using ggwave to send text over sound.</p>
+      </header>
+
+      <section class="card" id="encode-section">
+        <h2>Encode text</h2>
+        <form id="encode-form">
+          <label for="encode-text">Message</label>
+          <textarea id="encode-text" rows="3" placeholder="Type a short message"></textarea>
+
+          <div class="row">
+            <label for="protocol-select">Protocol</label>
+            <select id="protocol-select"></select>
+          </div>
+
+          <div class="row">
+            <label for="volume-range">Volume</label>
+            <input type="range" id="volume-range" min="1" max="50" value="10" />
+            <span id="volume-value">10</span>
+          </div>
+
+          <button type="submit">Generate audio</button>
+        </form>
+        <div class="output" id="encode-output" hidden>
+          <audio id="encode-audio" controls></audio>
+          <a id="download-link" download="message.wav">Download WAV</a>
+        </div>
+      </section>
+
+      <section class="card" id="decode-section">
+        <h2>Decode audio</h2>
+        <div class="decode-options">
+          <div class="decode-upload">
+            <label for="decode-file">Upload WAV</label>
+            <input id="decode-file" type="file" accept="audio/wav,audio/*" />
+            <button id="decode-file-button">Decode uploaded audio</button>
+          </div>
+          <div class="decode-record">
+            <button id="record-toggle">Start recording</button>
+            <p class="hint">Play the generated sound near your microphone to test decoding.</p>
+          </div>
+        </div>
+        <div class="output" id="decode-output">
+          <p id="decoded-text" class="decoded-text"></p>
+          <div id="link-preview" class="link-preview" hidden>
+            <div class="link-preview__media">
+              <img id="preview-image" alt="Link preview image" hidden />
+            </div>
+            <div class="link-preview__content">
+              <p class="link-preview__source" id="preview-source"></p>
+              <h3 class="link-preview__title" id="preview-title"></h3>
+              <p class="link-preview__description" id="preview-description"></p>
+              <a
+                id="preview-url"
+                class="link-preview__url"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+              ></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card info">
+        <h2>How it works</h2>
+        <p>
+          Text is converted to an audio waveform on the server using the
+          <strong>ggwave</strong> library. The generated sound can be played or downloaded.
+          You can record or upload that sound and the server will attempt to recover the original text.
+        </p>
+      </section>
+
+      <div id="status" role="status" aria-live="polite"></div>
+    </main>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
