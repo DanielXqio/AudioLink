@@ -79,6 +79,24 @@ function float32ToWav(float32Array, sampleRate) {
   return Buffer.from(buffer);
 }
 
+function int8ToFloat32(int8Array) {
+  const float32Array = new Float32Array(int8Array.length);
+  for (let i = 0; i < int8Array.length; i += 1) {
+    float32Array[i] = Math.max(-1, Math.min(1, int8Array[i] / 128));
+  }
+  return float32Array;
+}
+
+function float32ToInt8(float32Array) {
+  const result = new Int8Array(float32Array.length);
+  for (let i = 0; i < float32Array.length; i += 1) {
+    const sample = Math.max(-1, Math.min(1, float32Array[i]));
+    const scaled = sample < 0 ? sample * 128 : sample * 127;
+    result[i] = Math.round(scaled);
+  }
+  return result;
+}
+
 function resample(float32Array, fromSampleRate, toSampleRate) {
   if (!float32Array || fromSampleRate === toSampleRate) {
     return float32Array;
@@ -215,11 +233,13 @@ app.post('/api/encode', async (req, res) => {
       Number(volume) || 10,
     );
 
-    const float32Array = new Float32Array(
+    const int8Array = new Int8Array(
       waveformBytes.buffer,
       waveformBytes.byteOffset,
-      waveformBytes.length / Float32Array.BYTES_PER_ELEMENT,
+      waveformBytes.byteLength,
     );
+
+    const float32Array = int8ToFloat32(int8Array);
 
     const wavBuffer = float32ToWav(float32Array, defaultParameters.sampleRate);
     const base64 = wavBuffer.toString('base64');
@@ -257,11 +277,7 @@ app.post('/api/decode', async (req, res) => {
       float32Array = resample(float32Array, incomingSampleRate, defaultParameters.sampleRate);
     }
 
-    const byteArray = new Int8Array(
-      float32Array.buffer,
-      float32Array.byteOffset,
-      float32Array.byteLength,
-    );
+    const byteArray = float32ToInt8(float32Array);
 
     const decoded = ggwave.decode(ggwaveInstance, byteArray);
 
