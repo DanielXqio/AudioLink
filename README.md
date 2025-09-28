@@ -7,6 +7,7 @@ AudioLink is a proof-of-concept web application that uses the [ggwave](https://g
 - Encode arbitrary text into an audible waveform using ggwave protocols.
 - Download or play the generated audio directly in the browser.
 - Decode messages by uploading the generated audio file or recording through the microphone.
+]
 - Automatic protocol discovery from the ggwave module.
 
 ## Prerequisites
@@ -21,15 +22,13 @@ npm install
 npm run start
 ```
 
-The server listens on [http://localhost:3000](http://localhost:3000). Open the address in your browser to use the UI.
+
 
 ## Project structure
 
 ```
 ├── public/
-│   ├── app.js        # Frontend logic (fetches API, handles recording)
-│   ├── index.html    # UI layout
-│   └── styles.css    # Styling
+
 ├── src/
 │   └── server.js     # Express server with ggwave bindings
 ├── package.json
